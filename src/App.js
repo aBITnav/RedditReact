@@ -1,10 +1,10 @@
 
 import './App.css';
-
+import { useEffect, useState } from "react";
 import Dropdown from './dropdown';
 
 export default function App() {
-  let subRedditList=[
+  const subRedditTitles=[
     'Cats',
     'OldSchoolCool',
     'TheWayWeWere',
@@ -16,12 +16,12 @@ export default function App() {
     'astrophotography',
     'spaceporn'
   ]
-
+  const [list, setList] = useState([])
   return (
     <div className='row'>
-    <div className="col-md-12 text-center">
-    <Dropdown subRedditList={subRedditList}/>
-    </div>
+      <div className="col-md-12 text-center">
+      <Dropdown subRedditTitles={subRedditTitles}/>
+      </div>
     </div>
   );
 }

@@ -1,15 +1,18 @@
 import { Dropdown } from 'react-bootstrap';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Cards from './cards';
 
-export default function Drop({subRedditList=["Cats"],setSubReddit}){
+export default function Drop({subRedditTitles=["Cats"],setSubReddit}){
   return(
-    <Dropdown>
+    <Dropdown style={{padding:"1%"}}>
 
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
+      <Dropdown.Toggle variant="success" id="dropdown-basic" >
       SubReddits
       </Dropdown.Toggle>    
       <Dropdown.Menu>
       {
-        subRedditList.map(function(subReddit,idx){ 
+        subRedditTitles.map((subReddit,idx) => {
           return <Dropdown.Item href="#" key={idx} onClick={getContent}> {subReddit} </Dropdown.Item>})
       }
       </Dropdown.Menu>
@@ -18,8 +21,10 @@ export default function Drop({subRedditList=["Cats"],setSubReddit}){
 }
 
 function getContent(subReddit) {
+  const newDiv = document.createElement("div");
+  newDiv.className = 'row';
   subReddit=subReddit.target.innerText;
-  var url="https://www.reddit.com/r/"+subReddit+".json";
+  const url="https://www.reddit.com/r/"+subReddit+".json";
   let cardInfos=[];
   fetch(url)
   .then(response => response.json())
@@ -33,11 +38,23 @@ function getContent(subReddit) {
                   upvotes:element.data.ups,
                   url:link
               }
-              console.log(cardInfo);
               cardInfos.push(cardInfo);
           }
       });
   })
+  .then( _ => {
+    let list=[]
+    cardInfos.map(cardInfo => {
+        list.push(<Cards cardInfo={cardInfo}/>)
+        return cardInfo;
+    });
+    ReactDOM.render(
+      <div className='row'>
+        {list}
+      </div>,
+      document.getElementById('render')
+    );
+})
   .catch(err =>{
       console.log(err)
   });

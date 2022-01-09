@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+#render{
+  padding: 1%;
+}
+
+body{
+  background-color: wheat;
+}
+
+.col-sm{
+  padding: 1%;
+  align-items: center;
+}
+
+.cards-style{
+  width: 25rem;
+  height: 35rem;
+  overflow:"hidden";
+  padding: 1%;
+
+}
+
+.img-style{
+  box-shadow: 10px 10px 5px grey;
+}
